@@ -21,6 +21,7 @@ CREATE TABLE Users (
   Rol ENUM("Admin", "Employee")
 )
 
+
 CREATE TABLE CheckInCheckOuts (
   Id INT  AUTO_INCREMENT PRIMARY KEY,
   IdUser INT NOT NULL,  
@@ -40,3 +41,6 @@ ALTER TABLE CheckInCheckOuts
 --- MAKE SOME DATA ---
 INSERT INTO CheckInCheckOuts (`IdUser`, `EntryHour`, `DepartureHour`) VALUES
 (22, UTC_DATE, UTC_DATE)
+
+INSERT INTO Users (`IdEmployee`, `Password`, `UserName`, `Status`, `Rol`) VALUES
+(22, "12345", "josh", "Active", "Admin")
