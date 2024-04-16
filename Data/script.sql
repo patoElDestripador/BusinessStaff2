@@ -36,3 +36,7 @@ ALTER TABLE Users
 
 ALTER TABLE CheckInCheckOuts
   ADD FOREIGN KEY (IdUser) REFERENCES Users(Id);
+
+--- MAKE SOME DATA ---
+INSERT INTO CheckInCheckOuts (`IdUser`, `EntryHour`, `DepartureHour`) VALUES
+(22, UTC_DATE, UTC_DATE)
