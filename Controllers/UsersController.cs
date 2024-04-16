@@ -19,25 +19,35 @@ namespace businessStaff2.Controllers
       return View(await _context.CheckInCheckOuts.ToListAsync());
     }
 
-    public IActionResult Login ()
-    {
-      return View();
-    }
+    // public IActionResult Login ()
+    // {
+    //   return View();
+    // }
 
     [HttpGet]
     public async Task<IActionResult> Login (string userName, string password)
     {
       var userSearch = _context.Users.AsQueryable();
-      if (!string.IsNullOrEmpty(userName) || !string.IsNullOrEmpty(password))
+      if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
       {
-        userSearch = userSearch.Where ( u => u.UserName.Equals(userName));
-        Console.WriteLine("Hello world");
-        Console.WriteLine(userSearch.ToString());
-        // userSearch = userSearch.Equals();
-        return RedirectToAction("Index", "CheckInCheckOuts", new {area = ""});
+        try
+        {
+          // Remember that var get a type in first declaration
+          var userInfo = userSearch.FirstOrDefault(u => u.UserName.Equals(userName));
+          bool isValidPassword = userInfo.Password == password 
+            ? true 
+            : throw new NullReferenceException("Invalid password");
+
+          HttpContext.Session.SetString("UserId", userInfo.ID.ToString());
+          return RedirectToAction("Index", "CheckInCheckOuts");
+        }
+        catch (Exception)
+        {
+          return RedirectToAction("Error", "Home");
+          throw;
+        }
       }
-      
-      return View();
+      return RedirectToAction("Index");
     }
   }
 

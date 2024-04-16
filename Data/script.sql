@@ -70,6 +70,6 @@ FROM `CheckInCheckOuts` c
 LEFT JOIN `Users` u ON c.IdUser = u.Id
 LEFT JOIN `Employees` e ON u.IdEmployee = e.Id;
 
-SELECT * FROM TheViewSita;
+SELECT * FROM Users;
 
 
