@@ -25,7 +25,7 @@ CREATE TABLE CheckInCheckOuts (
   Id INT  AUTO_INCREMENT PRIMARY KEY,
   IdUser INT NOT NULL,  
   EntryHour DATETIME NOT NULL,
-  DespartureHour DATETIME NOT NULL
+  DepartureHour DATETIME NOT NULL
 )
 
 DROP Table CheckInCheckOuts;
