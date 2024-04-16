@@ -19,13 +19,10 @@ namespace businessStaff2.Controllers
         {
             try
             {
-
-                var history = await _context.CheckInCheckOuts.ToListAsync();
-                //var user = 
-                return View();
+                return View(await _context.TheViewSita.ToListAsync());
             }
-            catch
-            {
+            catch (Exception err)
+            {   
                 return RedirectToAction("Error","Home");
             }
         }
