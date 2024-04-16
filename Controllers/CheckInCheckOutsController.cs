@@ -15,11 +15,14 @@ namespace businessStaff2.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int Id)
         {
+            string userId = HttpContext.Session.GetString("UserId");
             try
             {
-                return View(await _context.TheViewSita.ToListAsync());
+                var registerSearch = _context.CheckInCheckOuts.Where(r => r.IdUser.Equals(int.Parse(userId)));
+                return View(await registerSearch.ToListAsync());
+                // return View(await _context.TheViewSita.ToListAsync());
             }
             catch (Exception err)
             {   
