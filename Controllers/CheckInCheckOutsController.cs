@@ -21,7 +21,7 @@ namespace businessStaff2.Controllers
             {
                 return View(await _context.TheViewSita.ToListAsync());
             }
-            catch (Exception err)
+            catch
             {   
                 return RedirectToAction("Error","Home");
             }
@@ -31,7 +31,5 @@ namespace businessStaff2.Controllers
         {
             return View();
         }
-
-
     }
 }
