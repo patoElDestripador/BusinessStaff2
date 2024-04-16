@@ -1,4 +1,4 @@
-namespace BusinessStaff.Mvc.Models
+namespace businessStaff2.Models
 {
   public class Employee
   {
