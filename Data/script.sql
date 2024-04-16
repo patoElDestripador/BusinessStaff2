@@ -21,11 +21,26 @@ CREATE TABLE Users (
   Rol ENUM("Admin", "Employee")
 )
 
-CREATE TABLE CheckInCheckOut (
+
+CREATE TABLE CheckInCheckOuts (
   Id INT  AUTO_INCREMENT PRIMARY KEY,
-  Iduser INT NOT NULL,  
+  IdUser INT NOT NULL,  
   EntryHour DATETIME NOT NULL,
-  DespartureHour DATETIME NOT NULL,
+  DepartureHour DATETIME NOT NULL
 )
 
---- M  ---
+DROP Table CheckInCheckOuts;
+
+--- FOREING KEYS  ---
+ALTER TABLE Users
+  ADD FOREIGN KEY (IdEmployee) REFERENCES Employees(Id);
+
+ALTER TABLE CheckInCheckOuts
+  ADD FOREIGN KEY (IdUser) REFERENCES Users(Id);
+
+--- MAKE SOME DATA ---
+INSERT INTO CheckInCheckOuts (`IdUser`, `EntryHour`, `DepartureHour`) VALUES
+(22, UTC_DATE, UTC_DATE)
+
+INSERT INTO Users (`IdEmployee`, `Password`, `UserName`, `Status`, `Rol`) VALUES
+(22, "12345", "josh", "Active", "Admin")

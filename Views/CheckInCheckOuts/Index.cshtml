@@ -1,0 +1,27 @@
+@{
+  string[] tableHeaders = {"ID USER", "Entry hour" , "Departure hour"};
+}
+
+<h2 class="mb-3 text-center">Login history</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      @foreach (var header in tableHeaders)
+      {
+        <th scope="col">@header</th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @foreach (var CheckIn in Model)
+    {
+      <tr>
+        <td>@CheckIn.IdUser</td>
+        <td>@CheckIn.EntryHour</td>
+        <td>@CheckIn.DepartureHour</td>
+      </tr>
+    }
+  </tbody>
+</table>
