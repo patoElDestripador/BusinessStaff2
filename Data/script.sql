@@ -21,11 +21,18 @@ CREATE TABLE Users (
   Rol ENUM("Admin", "Employee")
 )
 
-CREATE TABLE CheckInCheckOut (
+CREATE TABLE CheckInCheckOuts (
   Id INT  AUTO_INCREMENT PRIMARY KEY,
-  Iduser INT NOT NULL,  
+  IdUser INT NOT NULL,  
   EntryHour DATETIME NOT NULL,
-  DespartureHour DATETIME NOT NULL,
+  DespartureHour DATETIME NOT NULL
 )
 
---- M  ---
+DROP Table CheckInCheckOuts;
+
+--- FOREING KEYS  ---
+ALTER TABLE Users
+  ADD FOREIGN KEY (IdEmployee) REFERENCES Employees(Id);
+
+ALTER TABLE CheckInCheckOuts
+  ADD FOREIGN KEY (IdUser) REFERENCES Users(Id);
