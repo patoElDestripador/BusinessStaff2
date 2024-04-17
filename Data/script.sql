@@ -65,11 +65,10 @@ FROM `CheckInCheckOuts` c
 LEFT JOIN `Users` u ON c.IdUser = u.id
 LEFT JOIN `Employees` e ON u.IdEmployee = e.Id;
 
-CREATE VIEW TheViewSita AS SELECT u.Id, e.FirstName, c.EntryHour, c.DepartureHour 
+CREATE VIEW TheViewSita AS SELECT c.Id, c.IdUser , e.FirstName, c.EntryHour, c.DepartureHour 
 FROM `CheckInCheckOuts` c 
 LEFT JOIN `Users` u ON c.IdUser = u.Id
 LEFT JOIN `Employees` e ON u.IdEmployee = e.Id;
 
 SELECT * FROM TheViewSita;
-
 
