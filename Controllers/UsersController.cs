@@ -39,7 +39,9 @@ namespace businessStaff2.Controllers
             : throw new NullReferenceException("Invalid password");
 
           HttpContext.Session.SetString("UserId", userInfo.ID.ToString());
-          return RedirectToAction("Index", "CheckInCheckOuts");
+
+          // Pass values to checkin
+          return RedirectToAction("CreateConection", "CheckInCheckOuts");
         }
         catch (Exception)
         {
@@ -50,5 +52,4 @@ namespace businessStaff2.Controllers
       return RedirectToAction("Index");
     }
   }
-
 }

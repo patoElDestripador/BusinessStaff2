@@ -24,11 +24,13 @@ CREATE TABLE Users (
 CREATE TABLE CheckInCheckOuts (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     IdUser INT NOT NULL,
-    EntryHour DATETIME NOT NULL,
-    DespartureHour DATETIME NOT NULL,
+    EntryHour DATETIME,
+    DespartureHour DATETIME,
     FOREIGN KEY (IdUser) REFERENCES Users(Id)
 );
 
+SELECT * FROM CheckInCheckOuts;
+DROP TABLE CheckInCheckOuts;
 --- M  ---
 
 INSERT INTO Employees (FirstName, LastName, Address, Document, Phone, Status, Position) 
