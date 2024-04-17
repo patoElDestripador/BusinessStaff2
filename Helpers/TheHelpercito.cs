@@ -14,7 +14,7 @@ namespace businessStaff2.Helpers
     {
         public string someting(string hello)
         {
-            return "Hello";
+            return "Hello";  
         }
     /*
 
@@ -36,14 +36,17 @@ namespace businessStaff2.Helpers
             return username;
         }
 
-        public static IActionResult Guardian (string? userId)
+        public static IActionResult Guardian (string userId)
         {
-            if (!string.IsNullOrEmpty(userId))
+            Console.WriteLine("In guardian");
+            if (string.IsNullOrEmpty(userId))
             {
+                Console.WriteLine("Invalid data");
                 return new RedirectToActionResult("Index", "Users", null);
             }
-
-            return null;
+            Console.WriteLine("Valid data");
+            throw new ArgumentException( "You must specify between 1 and 4 slices of bread.");
+            return null ;
         }
     }
 }

@@ -14,32 +14,21 @@ namespace businessStaff2.Controllers
         public CheckInCheckOutsController(BaseContext context)
         {
             _context = context;
-            
-            try
-            {
-                bool userId = string.IsNullOrEmpty(HttpContext.Session.GetString("UserId"));
-                throw new NullReferenceException("No id");
-                // TheHelpercito.Guardian(userId);
-            }
-            catch (Exception)
-            {
-                TheHelpercito.Guardian(null);
-                throw;
-            }
-            
         }
-
 
         public async Task<IActionResult> Index()
         {
             string userId = HttpContext.Session.GetString("UserId");
+            Console.WriteLine($"User id= {userId}");
             try
             {
-                return View(await _context.TheViewSita.ToListAsync());
+                return TheHelpercito.Guardian(userId);
+                // return View(await _context.TheViewSita.ToListAsync());
             }
             catch (Exception err)
             {   
-                return RedirectToAction("Error","Home");
+                return View(await _context.TheViewSita.ToListAsync());
+                // return RedirectToAction("Error","Home");
             }
         }
 
@@ -51,6 +40,8 @@ namespace businessStaff2.Controllers
         public async Task<IActionResult> CloseConection () 
         {
             int tableId = int.Parse(HttpContext.Session.GetString("TableId"));
+
+
             CheckInCheckOut checkOut = await _context.CheckInCheckOuts.FirstOrDefaultAsync(u => u.Id == tableId);
 
             checkOut.DepartureHour = DateTime.Now;
@@ -69,11 +60,9 @@ namespace businessStaff2.Controllers
             checkIn.EntryHour = DateTime.Now;
             _context.Add(checkIn);
             _context.SaveChanges();
-
             var checkInEntry = await _context.CheckInCheckOuts
                 .OrderBy(u => u.Id)
                 .LastOrDefaultAsync(u => u.IdUser == userId);
-
             HttpContext.Session.SetString("TableId", checkInEntry.Id.ToString());
             return RedirectToAction("Index");
         }
