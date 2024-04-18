@@ -49,6 +49,8 @@ namespace businessStaff2.Controllers
 
         public async Task<IActionResult> CreateConection () 
         {   
+
+            //generar independencia en cuanto la posibilidad de crear o eliminar la funcion
             int userId = int.Parse(HttpContext.Session.GetString("UserId"));
 
             // Create table record
@@ -66,3 +68,12 @@ namespace businessStaff2.Controllers
         }
     }
 }
+
+/*
+1 - Validar usuarios en base a la password encriptada 
+2 - Hacer que cuando se logge se redirija a el index Home 
+3 - Independizar la funcionalidad que permite guarda la hora de entrada y hora de salida
+4 - Agregarle funcionalidad a los botones check in & check out del index CheckICheckOuts 
+5 - Eliminar La funcion de que cuando se loguear y desloguear se actualice la infromacion de entrad y salida
+6 - Que cuando el usuario no este logueado no aparezca la img de cerrar session 
+*/
