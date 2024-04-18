@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace businessStaff2.Controllers
 {
@@ -20,19 +24,7 @@ namespace businessStaff2.Controllers
 
         public async Task<IActionResult> Index()
         {
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-            string userId = HttpContext.Session.GetString("UserId");
-            Console.WriteLine($"User id= {userId}");
-            try
-            {
-                return TheHelpercito.Guardian(userId);
-                // return View(await _context.TheViewSita.ToListAsync());
-            }
-            catch (Exception err)
-            {   
-                return View(await _context.TheViewSita.ToListAsync());
-                // return RedirectToAction("Error","Home");
-            }
+            return View(await _context.TheViewSita.ToListAsync());
         }
 
         public IActionResult Error()
@@ -50,19 +42,22 @@ namespace businessStaff2.Controllers
             checkOut.DepartureHour = DateTime.Now;
             _context.CheckInCheckOuts.Update(checkOut);
             _context.SaveChanges();
-
+            // Clear server cookies
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Users");
         }
 
         public async Task<IActionResult> CreateConection () 
         {   
-            // Create table record
             int userId = int.Parse(HttpContext.Session.GetString("UserId"));
+
+            // Create table record
             CheckInCheckOut checkIn = new CheckInCheckOut();
             checkIn.IdUser = userId; 
             checkIn.EntryHour = DateTime.Now;
             _context.Add(checkIn);
             _context.SaveChanges();
+
             var checkInEntry = await _context.CheckInCheckOuts
                 .OrderBy(u => u.Id)
                 .LastOrDefaultAsync(u => u.IdUser == userId);

@@ -3,9 +3,11 @@ using businessStaff2.Models;
 using businessStaff2.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace businessStaff2.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller 
     {
         public readonly BaseContext _context; 
@@ -31,11 +33,13 @@ namespace businessStaff2.Controllers
             return View();
         }
         
+        [Authorize(Roles = "Admin")]
         public IActionResult Create() 
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost] 
         public IActionResult Create(Employee e)
         {
@@ -57,6 +61,7 @@ namespace businessStaff2.Controllers
             }
         }
         
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             try
