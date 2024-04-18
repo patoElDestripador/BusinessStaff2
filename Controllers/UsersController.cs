@@ -1,4 +1,5 @@
 using businessStaff2.Data;
+using businessStaff2.Helpers;
 using businessStaff2.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,9 @@ namespace businessStaff2.Controllers
       _context = context;
     }
 
-    public async Task<IActionResult> Index ()
+    public IActionResult Index ()
     {
-      return View(await _context.CheckInCheckOuts.ToListAsync());
+      return View();
     }
 
     // public IActionResult Login ()
@@ -38,9 +39,11 @@ namespace businessStaff2.Controllers
             ? true 
             : throw new NullReferenceException("Invalid password");
 
+          // Give authentication
+
           HttpContext.Session.SetString("UserId", userInfo.ID.ToString());
 
-          // Pass values to checkin
+          // Pass values to check in
           return RedirectToAction("CreateConection", "CheckInCheckOuts");
         }
         catch (Exception)

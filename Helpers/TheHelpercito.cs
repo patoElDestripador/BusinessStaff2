@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 using businessStaff2.Data;
 using businessStaff2.Models;
 using businessStaff2.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
+using System.Web.Script.Serialization;
 
 namespace businessStaff2.Helpers
 {
@@ -48,5 +51,25 @@ namespace businessStaff2.Helpers
             throw new ArgumentException( "You must specify between 1 and 4 slices of bread.");
             return null ;
         }
+
+        public static void CreateAuthentication (User user)
+        {
+            var authUser = user; 
+            User serializeModel =  authUser;
+      
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string userData = serializer.Serialize(serializeModel);
+      
+            FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
+                1,username,DateTime.Now,DateTime.Now.AddHours(8),false,userData);
+            string encTicket = FormsAuthentication.Encrypt(authTicket);
+            HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+            Response.Cookies.Add(faCookie);
+        }
+
+        // public static void SetGuardian (IPrincipal principal)
+        // {
+        //     Thread.CurrentPrincipal = principal;
+        // }
     }
 }

@@ -5,9 +5,11 @@ using businessStaff2.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.AspNetCore.Authorization;
 
 namespace businessStaff2.Controllers
 {
+    [Authorize]
     public class CheckInCheckOutsController : Controller
     {
         public readonly BaseContext _context;
