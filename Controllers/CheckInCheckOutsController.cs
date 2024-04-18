@@ -20,6 +20,7 @@ namespace businessStaff2.Controllers
 
         public async Task<IActionResult> Index()
         {
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
             string userId = HttpContext.Session.GetString("UserId");
             Console.WriteLine($"User id= {userId}");
             try

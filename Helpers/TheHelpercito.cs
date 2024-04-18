@@ -9,7 +9,15 @@ using businessStaff2.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using System.Web;
+
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Security.Claims;
+
 
 namespace businessStaff2.Helpers
 {
@@ -52,21 +60,22 @@ namespace businessStaff2.Helpers
             return null ;
         }
 
-        public static void CreateAuthentication (User user)
+        public static async void CreateAuthentication (User user)
         {
             var authUser = user; 
             User serializeModel =  authUser;
       
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string userData = serializer.Serialize(serializeModel);
+            // JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string userData = JsonConvert.SerializeObject(serializeModel); 
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
       
-            FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
-                1,username,DateTime.Now,DateTime.Now.AddHours(8),false,userData);
-            string encTicket = FormsAuthentication.Encrypt(authTicket);
-            HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
-            Response.Cookies.Add(faCookie);
+        //     AuthenticationTicket authTicket = new FormsAuthenticationTicket(
+        //         1,username,DateTime.Now,DateTime.Now.AddHours(8),false,userData);
+        //     string encTicket = FormsAuthentication.Encrypt(authTicket);
+        //     HttpCookie faCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+        //     Response.Cookies.Add(faCookie);
+        // HttpContext.Current.User;
         }
-
         // public static void SetGuardian (IPrincipal principal)
         // {
         //     Thread.CurrentPrincipal = principal;
