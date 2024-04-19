@@ -12,17 +12,17 @@ namespace businessStaff2.Controllers
   {
     public readonly BaseContext _context;
 
-    public UsersController (BaseContext context) 
+    public UsersController(BaseContext context)
     {
       _context = context;
     }
 
-    public IActionResult Index ()
+    public IActionResult Index()
     {
       return View();
     }
 
-    public async Task<IActionResult> Login (string userName, string password)
+    public async Task<IActionResult> Login(string userName, string password)
     {
       var userSearch = _context.Users.AsQueryable();
       if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))

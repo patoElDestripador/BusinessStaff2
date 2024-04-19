@@ -1,18 +1,17 @@
 @{
-    ViewData["Title"] = "Employees";
+  ViewData["Title"] = "Employees";
 }
 <div class="d-flex justify-content-between mb-3">
-    <div class="ms-auto">
+  <div class="ms-auto">
     <a class="btn btn-secondary " asp-controller="Employees" asp-action="Create">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 18">
-            <path fill="none" stroke="#ffffff" d="M7.5 4v7M4 7.5h7m-3.5 7a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z" />
-        </svg> Create Employee
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 15 18">
+        <path fill="none" stroke="#ffffff" d="M7.5 4v7M4 7.5h7m-3.5 7a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z" />
+      </svg> Create Employee
     </a>
-    </div>
+  </div>
 </div>
-
 <table class="table table-dark table-hover caption-top">
-<caption>List of Employees</caption>
+  <caption>List of Employees</caption>
   <thead class="table-secondary">
     <tr>
       <th scope="col">Id</th>
@@ -28,21 +27,25 @@
   <tbody>
     @foreach (var employee in Model)
     {
-        <tr>
-            <td>@employee.Id</td>
-            <td>@employee.FirstName</td>
-            <td>@employee.LastName</td>
-            <td>@employee.Address</td>
-            <td>@employee.Document</td>
-            <td>@employee.Phone</td>
-            <td>@employee.Status</td>
-            <td>
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <a class="btn btn-danger" type="button" asp-controller="Employees" asp-action="Delete" asp-route-id="@employee.Id"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path fill="#ffffff" d="M216 48h-36V36a28 28 0 0 0-28-28h-48a28 28 0 0 0-28 28v12H40a12 12 0 0 0 0 24h4v136a20 20 0 0 0 20 20h128a20 20 0 0 0 20-20V72h4a12 12 0 0 0 0-24M100 36a4 4 0 0 1 4-4h48a4 4 0 0 1 4 4v12h-56Zm88 168H68V72h120Zm-72-100v64a12 12 0 0 1-24 0v-64a12 12 0 0 1 24 0m48 0v64a12 12 0 0 1-24 0v-64a12 12 0 0 1 24 0"/></svg></a>
-                </div>
-            </td>
-        </tr>
+      <tr>
+        <td>@employee.Id</td>
+        <td>@employee.FirstName</td>
+        <td>@employee.LastName</td>
+        <td>@employee.Address</td>
+        <td>@employee.Document</td>
+        <td>@employee.Phone</td>
+        <td>@employee.Status</td>
+        <td>
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <a class="btn btn-danger" type="button" asp-controller="Employees" asp-action="Delete"
+              asp-route-id="@employee.Id"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                viewBox="0 0 256 256">
+                <path fill="#ffffff"
+                  d="M216 48h-36V36a28 28 0 0 0-28-28h-48a28 28 0 0 0-28 28v12H40a12 12 0 0 0 0 24h4v136a20 20 0 0 0 20 20h128a20 20 0 0 0 20-20V72h4a12 12 0 0 0 0-24M100 36a4 4 0 0 1 4-4h48a4 4 0 0 1 4 4v12h-56Zm88 168H68V72h120Zm-72-100v64a12 12 0 0 1-24 0v-64a12 12 0 0 1 24 0m48 0v64a12 12 0 0 1-24 0v-64a12 12 0 0 1 24 0" />
+              </svg></a>
+          </div>
+        </td>
+      </tr>
     }
-
   </tbody>
 </table>
