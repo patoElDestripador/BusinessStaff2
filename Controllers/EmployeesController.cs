@@ -3,9 +3,11 @@ using businessStaff2.Models;
 using businessStaff2.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace businessStaff2.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller 
     {
         public readonly BaseContext _context; 
