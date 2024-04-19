@@ -39,19 +39,27 @@ namespace businessStaff2.Controllers
         }
 
         [HttpPost] 
-        public IActionResult Create(Employee e)
+        public async Task<IActionResult> Create(Employee e)
         {
             try
             {
-                if(ModelState.IsValid){
-                    e.Status = "Active";
-                    _context.Employees.Add(e);
+                e.Status = "Active";
+                e.CreationTime = DateTime.Now;
+                await _context.Employees.AddAsync(e);
+                await _context.SaveChangesAsync(); 
+                string userName = TheHelpercito.GenerateUserName(e.FirstName,e.LastName,e.Document);
+                var lastEmployee = await _context.Employees.OrderByDescending(e => e.CreationTime).FirstOrDefaultAsync();
+
+                User user = new User(){
+                    IdEmployee = lastEmployee.Id,
+                    Password = TheHelpercito.Encrypt(userName),
+                    UserName = userName,
+                    status = e.Status,
+                    Rol = "Admin"
+                };
+                    _context.Users.Add(user);
                     _context.SaveChanges(); 
-                    //crear usuarios(e)
-                    Console.WriteLine(TheHelpercito.GenerateUserName(e.FirstName,e.LastName,e.Document));
-                    return RedirectToAction("Index");
-                }
-                return RedirectToAction("Error","Home");
+                return RedirectToAction("Index");
             }
             catch 
             {

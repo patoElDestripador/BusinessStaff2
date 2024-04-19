@@ -39,6 +39,7 @@ namespace businessStaff2.Controllers
             _context.CheckInCheckOuts.Update(checkOut);
             _context.SaveChanges();
             // Clear server cookies
+            HttpContext.Session.Clear();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Users");
         }
