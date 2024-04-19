@@ -10,5 +10,6 @@ namespace businessStaff2.Models
     public string? Phone {get; set;}
     public string? Status {get; set;}
     public string? Position {get; set;}
+    public DateTime? CreationTime {get; set;}
   }
 }

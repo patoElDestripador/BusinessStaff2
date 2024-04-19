@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Authorization
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,18 +16,22 @@
 <header class="py-3 mb-3 border-bottom">
     <div class="container-fluid d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
         <h3 class="justify-content-start "><a class="text-decoration-none text-dark" asp-controller="Home" asp-action="Index">businessStaff2</a></h3>
-    <div class="d-flex justify-content-end align-items-end ">
-        <div class="flex-shrink-1 dropdown">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small shadow">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a asp-controller="CheckInCheckOuts" asp-action="CloseConection" class="dropdown-item">Sign out</a></li>
-          </ul>
+
+        @if (User.Identity.IsAuthenticated == true)
+        {
+        <div class="d-flex justify-content-end align-items-end ">
+            <div class="flex-shrink-1 dropdown">
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu text-small shadow">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a asp-controller="Users" asp-action="Logout" class="dropdown-item">Sign out</a></li>
+              </ul>
+            </div>
         </div>
-    </div>
+        }
 
       </div>
     </div>

@@ -20,7 +20,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.Cookie.Name = "MyAppCookie";
-        options.LoginPath = "/Users/Login";
+        options.LoginPath = "/Home/Unauthorized";
         options.AccessDeniedPath = "/Home/Error";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         options.SlidingExpiration = true; // Restore expiration time when user make request

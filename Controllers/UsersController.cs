@@ -3,11 +3,14 @@ using businessStaff2.Data;
 using businessStaff2.Helpers;
 using businessStaff2.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace businessStaff2.Controllers
 {
+  [Authorize]
   public class UsersController : Controller
   {
     public readonly BaseContext _context;
@@ -17,11 +20,13 @@ namespace businessStaff2.Controllers
       _context = context;
     }
 
+    [AllowAnonymous]
     public IActionResult Index ()
     {
       return View();
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Login (string userName, string password)
     {
       var userSearch = _context.Users.AsQueryable();
@@ -31,7 +36,9 @@ namespace businessStaff2.Controllers
         {
           // Remember that var get a type in first declaration
           var userInfo = userSearch.FirstOrDefault(u => u.UserName.Equals(userName));
-          if (userInfo.Password == password)
+          string descriptPassword = TheHelpercito.Decrypt(userInfo.Password);
+
+          if (descriptPassword == password)
           {
             var claims = new List<Claim>
             {
@@ -46,18 +53,22 @@ namespace businessStaff2.Controllers
 
             HttpContext.Session.SetString("UserId", userInfo.ID.ToString());
             // Pass values to check in
-            return RedirectToAction("CreateConection", "CheckInCheckOuts");
+            return RedirectToAction("Index", "Home");
           }
-          // bool isValidPassword = userInfo.Password == password 
-          //   ? true 
-          //   : throw new NullReferenceException("Invalid password");
         }
         catch (Exception)
         {
           return RedirectToAction("Error", "Home");
-          throw;
         }
       }
+      return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> Logout ()
+    {
+      // Clear server cookies
+      await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      HttpContext.Session.Clear();
       return RedirectToAction("Index");
     }
   }
